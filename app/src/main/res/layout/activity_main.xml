@@ -46,10 +46,10 @@
         android:textColorHint="#FFFFFF"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txtEmail" />
+        app:layout_constraintTop_toBottomOf="@+id/txtEmailOnEnterance" />
 
     <EditText
-        android:id="@+id/txtEmail"
+        android:id="@+id/txtEmailOnEnterance"
         android:layout_width="269dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
@@ -63,29 +63,32 @@
         app:layout_constraintTop_toBottomOf="@+id/imageViewOnEnterance" />
 
     <Button
-        android:id="@+id/btnRegister"
-        android:layout_width="110dp"
-        android:layout_height="48dp"
-        android:layout_marginTop="20dp"
-        android:onClick="onClickBtnRegister"
-        android:text="Register"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/txtPassword"
-        app:layout_constraintTop_toBottomOf="@+id/txtPassword"
-        app:layout_constraintVertical_bias="0.004" />
-
-    <Button
         android:id="@+id/btnSignIn"
-        android:layout_width="110dp"
+        android:layout_width="279dp"
         android:layout_height="48dp"
         android:layout_marginTop="20dp"
+        android:backgroundTint="#FFFFFF"
         android:onClick="onClickBtnSignIn"
         android:text="Sıgn ın"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/btnRegister"
-        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/txtPassword"
         app:layout_constraintTop_toBottomOf="@+id/txtPassword"
         app:layout_constraintVertical_bias="0.004" />
+
+    <TextView
+        android:id="@+id/txtCreateAnAccount"
+        android:layout_width="279dp"
+        android:layout_height="33dp"
+        android:layout_marginTop="20dp"
+        android:onClick="txtCreateAnAccountOnClick"
+        android:text="Create an Account"
+        android:textAlignment="center"
+        android:textColor="#FFFFFF"
+        android:textSize="18dp"
+        app:flow_horizontalAlign="center"
+        app:flow_verticalAlign="center"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btnSignIn" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

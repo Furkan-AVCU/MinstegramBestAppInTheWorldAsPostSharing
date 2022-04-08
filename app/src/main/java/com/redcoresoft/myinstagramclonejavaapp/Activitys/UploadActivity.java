@@ -90,6 +90,7 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
         auth = FirebaseAuth.getInstance();
         storageReference = firebaseStorage.getReference();
 
+
         textView_location = findViewById(R.id.text_location);
         button_location = findViewById(R.id.button_location);
 
@@ -123,9 +124,9 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
         navigationDrawerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (drawerLayout.isDrawerOpen(GravityCompat.END)){
+                if (drawerLayout.isDrawerOpen(GravityCompat.END)) {
                     drawerLayout.closeDrawer(GravityCompat.END);
-                }else{
+                } else {
                     drawerLayout.openDrawer(GravityCompat.END);
                 }
 
@@ -135,16 +136,16 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
 
     private boolean onNavigationItemSelected(MenuItem menuItem) {
 
-        if (menuItem.getItemId()==R.id.add_post){ //Feed Activity
-            Intent intentToUpload = new Intent(UploadActivity.this,FeedActivity.class);
+        if (menuItem.getItemId() == R.id.add_post) { //Feed Activity
+            Intent intentToUpload = new Intent(UploadActivity.this, FeedActivity.class);
             startActivity(intentToUpload);
-        }else if (menuItem.getItemId()==R.id.sign_out){ //Sign Out Activity
+        } else if (menuItem.getItemId() == R.id.sign_out) { //Sign Out Activity
             auth.signOut();
-            Intent intentToMain = new Intent(UploadActivity.this,MainActivity.class);
+            Intent intentToMain = new Intent(UploadActivity.this, MainActivity.class);
             startActivity(intentToMain);
             finish();
-        }else if (menuItem.getItemId()==R.id.about){ //About Activity
-            Intent intentToAboutUs = new Intent(UploadActivity.this,AboutUsActivity.class);
+        } else if (menuItem.getItemId() == R.id.about) { //About Activity
+            Intent intentToAboutUs = new Intent(UploadActivity.this, AboutUsActivity.class);
             startActivity(intentToAboutUs);
         }
 
@@ -239,27 +240,51 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
 
     public void onClickSelectImage(View view) {
 
-        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // eğer izin yoksa
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) { // izin isteme bildirimi göstermelimiyim diye sorgu
-                Snackbar.make(view, "Permission needed for gallery", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission", new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) { // ask for permission
+       if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // eğer izin yoksa
+           if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) { // izin isteme bildirimi göstermelimiyim diye sorgu
+               Snackbar.make(view, "Permission needed for gallery", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission", new View.OnClickListener() {
+                   @Override
+                   public void onClick(View v) { // ask for permission
 
-                        permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
-                    }
-                }).show();//LENGT INDEF. ile ne kadar süre boyunca gözüleceği belli oluyor bir işem olasıya kadar beklicek
-            } else {// ask for permission
-                permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                       permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                   }
+               }).show();//LENGT INDEF. ile ne kadar süre boyunca gözüleceği belli oluyor bir işem olasıya kadar beklicek
+           } else {// ask for permission
+               permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
 
-            }
+           }
 
-        } else {// izin verilmiş demektir
-            Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-            activityResultLauncher.launch(intentToGallery);
+       } else {// izin verilmiş demektir
+           Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+           activityResultLauncher.launch(intentToGallery);
 
-        }
+       }
 
 
+
+
+    }
+
+    private void takeImageFromGallery(View view){
+           if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) { // eğer izin yoksa
+               if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_EXTERNAL_STORAGE)) { // izin isteme bildirimi göstermelimiyim diye sorgu
+                   Snackbar.make(view, "Permission needed for gallery", Snackbar.LENGTH_INDEFINITE).setAction("Give Permission", new View.OnClickListener() {
+                       @Override
+                       public void onClick(View v) { // ask for permission
+
+                         permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+                     }
+                 }).show();//LENGT INDEF. ile ne kadar süre boyunca gözüleceği belli oluyor bir işem olasıya kadar beklicek
+             } else {// ask for permission
+                 permissionLauncher.launch(Manifest.permission.READ_EXTERNAL_STORAGE);
+
+             }
+
+         } else {// izin verilmiş demektir
+             Intent intentToGallery = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+             activityResultLauncher.launch(intentToGallery);
+
+           }
     }
 
     private void registerLauncher() {
@@ -272,8 +297,6 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
                     if (intentFromResult != null) {
                         imageData = intentFromResult.getData();
                         binding.imgSharedImage.setImageURI(imageData);
-
-
                     }
                 }
             }
@@ -293,6 +316,8 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
 
     }
 
+
+
     @Override
     public void onLocationChanged(@NonNull Location location) {
         Toast.makeText(this, "Lokasyonunuz Alınıyor", Toast.LENGTH_SHORT).show();
@@ -301,9 +326,8 @@ public class UploadActivity extends AppCompatActivity implements LocationListene
             List<Address> addresses = geocoder.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
             String address;
             if (addresses.get(0).getSubAdminArea() != null) { // Başakşehir + istanbul + kayabaşı bulvarı
-               address = addresses.get(0).getAdminArea() + " " + addresses.get(0).getSubAdminArea() + ", " + addresses.get(0).getThoroughfare() ;
-            }
-            else if (addresses.get(0).getAddressLine(0) != null) {
+                address = addresses.get(0).getAdminArea() + " " + addresses.get(0).getSubAdminArea() + ", " + addresses.get(0).getThoroughfare();
+            } else if (addresses.get(0).getAddressLine(0) != null) {
                 address = addresses.get(0).getAddressLine(0);
             } else {
                 address = addresses.get(0).getCountryName();
